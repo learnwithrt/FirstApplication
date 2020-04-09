@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">First Application</string>
+    <string name="welcome_message">Grade 17 Welcomes you</string>
+    <string name="yes_button">Yes</string>
+    <string name="no_Button">No</string>
+    <string name="logo_desc">Neusoft</string>
+    <string name="start_buton">Start</string>
+    <string name="next_button">Next</string>
+    <string name="prev_button">Previous</string>
+    <string name="q1">Does Android Studio work well?</string>
+    <string name="q2">Did google invent android?</string>
+    <string name="q3">Android 13 is the latest version of Android?</string>
+    <string name="q4">The first version of Android was Cupcake?</string>
+    <string name="q5">AVD Manager is used to manage SDK?</string>
+    <string name="submit_button">Submit</string>
+    <string name="home_button">Home</string>
+</resources>
