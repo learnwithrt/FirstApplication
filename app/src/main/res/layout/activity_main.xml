@@ -67,21 +67,21 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button
+            <ImageButton
                 android:id="@+id/prev_button"
-                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/prev_button" />
+                android:contentDescription="@string/prev_button"
+                app:srcCompat="@android:drawable/ic_media_previous" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/next_button"
-                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/next_button" />
+                android:contentDescription="@string/next_button"
+                app:srcCompat="@android:drawable/ic_media_next" />
         </LinearLayout>
 
         <LinearLayout

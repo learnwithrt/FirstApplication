@@ -9,12 +9,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.model.Question;
 
-
+/*
+1. All questions can be answered only once
+2. Submit button is enabled only after all questions have been answered
+ */
 public class MainActivity extends AppCompatActivity {
     private final String TAG="First Application";
     private final String LAST_INDEX="question_index";
@@ -34,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
     };
     //something to show which question is on the view
     private int mCurrent_Index=0;//arrays start with the index 0
+    //A Variable to check if a question has been answered or not
+    private boolean mAnswered[]=new boolean[mQuestion_Bank.length];//So the number of booleans
+    //are according to number of questions
     @Override//redefining the the implementation of onCreate
     //it will have some information(Bundle)- Later
     //Lifecycle-> What to do when the activity is created
@@ -64,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
                 //For how long do you want to show it? short or long?
                 //Toast.makeText(MainActivity.this, R.string.yes_text, Toast.LENGTH_SHORT).show();
                 //return true or false
+                //Question with index mCurrentIndex has been answered
+                mAnswered[mCurrent_Index]=true;
                 TextView question=null;
                 question=findViewById(R.id.question_text);
                 //Breakpoint -> Stop the execution and then go one step by one step
@@ -81,12 +90,15 @@ public class MainActivity extends AppCompatActivity {
                     //negative marking -> if the answer is wrong- > decrement the score
                     question.setTextColor(Color.RED);
                 }
+                checkButtons();
+                checkSubmit();
             }
         });
         no_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 //Toast.makeText(MainActivity.this,R.string.no_text,Toast.LENGTH_LONG).show();
+                mAnswered[mCurrent_Index]=true;
                 TextView question=findViewById(R.id.question_text);
                 if(mQuestion_Bank[mCurrent_Index].isAnswer()){//if the answer stored is true
                     //show a toast
@@ -98,11 +110,13 @@ public class MainActivity extends AppCompatActivity {
                     score++;
                     question.setTextColor(Color.GREEN);
                 }
+                checkButtons();
+                checkSubmit();
             }
         });
         //Navigate the questions (Next and Previous Button)
-        Button next=findViewById(R.id.next_button);
-        Button previous=findViewById(R.id.prev_button);
+        ImageButton next=findViewById(R.id.next_button);
+        ImageButton previous=findViewById(R.id.prev_button);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,9 +162,31 @@ public class MainActivity extends AppCompatActivity {
         question.setText(mQuestion_Bank[mCurrent_Index].getQuestion_id());
         //dynamically link the textview to the string resource
         //question.setText(R.string.q1)
+        checkButtons();
+        checkSubmit();
     }
     //Alt+insert -> Generate code
-
+    //Method to enable or disable buttons
+    private void checkButtons(){
+        if(mAnswered[mCurrent_Index]){//Question has been answered
+            findViewById(R.id.yes_button).setEnabled(false);//Disable the yes button
+            findViewById(R.id.no_button).setEnabled(false);//Disable the No button
+        }
+        else{
+            findViewById(R.id.yes_button).setEnabled(true);//Enable the yes button
+            findViewById(R.id.no_button).setEnabled(true);//Enable the No button
+        }
+    }
+    private void checkSubmit(){
+        boolean answered_all=true;
+        for(int i=0;i<mAnswered.length;i++){
+            if(!mAnswered[i]){//check if the question is not answered
+                answered_all=false;
+            }
+        }
+        findViewById(R.id.submit_button).setEnabled(answered_all);
+        //If answered all is true(When all questions have been answered) then enable submit button
+    }
     @Override
     protected void onStart() {
         super.onStart();
