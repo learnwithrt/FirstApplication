@@ -1,8 +1,6 @@
 package com.example.firstapplication;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.model.Question;
 
@@ -29,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     //what to do when the activity is created?
     //Database of Questions (QuestionBank)
     //Alt+Enter -> REsolve Issues like import and get suggestions
-    private Question mQuestion_Bank[]=new Question[]{
+    private Question[] mQuestion_Bank=new Question[]{
             new Question(R.string.q1,true),
             new Question(R.string.q2,false),
             new Question(R.string.q3,false),
@@ -39,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     //something to show which question is on the view
     private int mCurrent_Index=0;//arrays start with the index 0
     //A Variable to check if a question has been answered or not
-    private boolean mAnswered[]=new boolean[mQuestion_Bank.length];//So the number of booleans
+    private boolean[] mAnswered=new boolean[mQuestion_Bank.length];//So the number of booleans
     //are according to number of questions
     @Override//redefining the the implementation of onCreate
     //it will have some information(Bundle)- Later
@@ -73,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                 //return true or false
                 //Question with index mCurrentIndex has been answered
                 mAnswered[mCurrent_Index]=true;
-                TextView question=null;
+                TextView question;
                 question=findViewById(R.id.question_text);
                 //Breakpoint -> Stop the execution and then go one step by one step
                 //Step debugger
@@ -179,9 +176,10 @@ public class MainActivity extends AppCompatActivity {
     }
     private void checkSubmit(){
         boolean answered_all=true;
-        for(int i=0;i<mAnswered.length;i++){
-            if(!mAnswered[i]){//check if the question is not answered
+        for(boolean ans:mAnswered){
+            if(!ans){//check if the question is not answered
                 answered_all=false;
+                break;
             }
         }
         findViewById(R.id.submit_button).setEnabled(answered_all);
